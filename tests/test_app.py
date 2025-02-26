@@ -1,20 +1,41 @@
 from playwright.sync_api import Page, expect
 
-# Tests for your routes go here
+def test_get_albums(page, test_web_address):
+    page.goto(f"http://{test_web_address}/albums")
 
-# === Example Code Below ===
+    expect(page.locator("h1")).to_have_text("Albums")
 
-"""
-We can get an emoji from the /emoji page
-"""
-def test_get_emoji(page, test_web_address): # Note new parameters
-    # We load a virtual browser and navigate to the /emoji page
-    page.goto(f"http://{test_web_address}/emoji")
+    first_album_block = page.locator("div").nth(0)
+    expect(first_album_block).to_contain_text("Title: Doolittle")
+    expect(first_album_block).to_contain_text("Released: 1989")
 
-    # We look at the <strong> tag
-    strong_tag = page.locator("strong")
+    first_album_block = page.locator("div").nth(-1)
+    expect(first_album_block).to_contain_text("Title: Ring Ring")
+    expect(first_album_block).to_contain_text("Released: 1973")
 
-    # We assert that it has the text ":)"
-    expect(strong_tag).to_have_text(":)")
+def test_get_album_by_id_1(page, test_web_address):
+    page.goto(f"http://{test_web_address}/albums/1")
 
-# === End Example Code ===
+    expect(page.locator("h1")).to_have_text("Doolittle")
+    p_block = page.locator("p")
+    
+    expect(p_block).to_contain_text("Release year: 1989")
+    expect(p_block).to_contain_text("Artist: Pixies")
+
+def test_get_album_by_id_2(page, test_web_address):
+    page.goto(f"http://{test_web_address}/albums/2")
+
+    expect(page.locator("h1")).to_have_text("Surfer Rosa")
+    p_block = page.locator("p")
+    
+    expect(p_block).to_contain_text("Release year: 1988")
+    expect(p_block).to_contain_text("Artist: Pixies")
+
+def test_get_album_by_id_3(page, test_web_address):
+    page.goto(f"http://{test_web_address}/albums/3")
+
+    expect(page.locator("h1")).to_have_text("Waterloo")
+    p_block = page.locator("p")
+    
+    expect(p_block).to_contain_text("Release year: 1974")
+    expect(p_block).to_contain_text("Artist: ABBA")
