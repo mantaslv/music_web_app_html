@@ -20,7 +20,6 @@
 
 # Install the virtual browser we will use for testing
 ; playwright install
-# If you encounter problems at this stage please contact your coach
 
 # Create a test and development database
 (html-application-starter-venv); createdb YOUR_PROJECT_NAME
@@ -32,7 +31,7 @@
 # Seed the development database
 (html-application-starter-venv); python seed_dev_database.py
 
-# Run the tests (with extra logging) - see below if you have any issues
+# Run the tests (with extra logging)
 (html-application-starter-venv); pytest -sv
 
 # Run the app
